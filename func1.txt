@@ -1,0 +1,21 @@
+#pointsToImage(points): This function takes in a list of 2D points and returns a 2D image representation of the point cloud.
+# Convert the distance measurements to a 2D point cloud
+points = []
+for r, theta in measurements:
+  x = r * np.cos(theta)
+  y = r * np.sin(theta)
+  points.append((x, y))
+
+# Convert the point cloud to a 2D image
+img = pointsToImage(points)
+#detectPotsWithYOLO(img): This function takes in a 2D image and uses a YOLO object detector to return a list of pots detected in the image.
+# Use YOLO to detect the pots in the image
+pots = detectPotsWithYOLO(img)
+#calculateDistanceToRoad(pot, measurements): This function takes in a pot and the distance measurements and returns the distance between the pot and the road.
+# For each pot in the environment:
+for pot in pots:
+  # Calculate the distance between the pot and the road
+  distance = calculateDistanceToRoad(pot, measurements)
+  # Update the minimum distance if necessary
+  if distance < minDistance:
+    minDistance = distance
